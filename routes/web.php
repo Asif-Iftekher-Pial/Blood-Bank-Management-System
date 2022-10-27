@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\MouController;
-use App\Http\Controllers\SakibController;
+use App\Http\Controllers\backend\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,11 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::get('/', function () {
-//     return view('welcome');
+//     return view('master');
 // });
 
-Route::get('/mou',[MouController::class,'indexAction']);
-
-Route::get('/pial',[MouController::class,'index']);
-
-Route::get('/sakib',[SakibController::class,'myIndex']);
+Route::get('/',[HomeController::class,'dashboard']);
