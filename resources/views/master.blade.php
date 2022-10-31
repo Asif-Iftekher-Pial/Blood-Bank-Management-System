@@ -26,7 +26,7 @@
 
         <section class="section dashboard">
             <div class="row">
-
+                
                @yield('main')
                
 
@@ -51,7 +51,8 @@
     </footer><!-- End Footer -->
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+            class="bi bi-arrow-up-short"></i>
+    </a>
 
     <!-- Vendor JS Files -->
     <script src="{{ asset('backend/assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
@@ -65,6 +66,14 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('backend/assets/js/main.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    
+    <script>
+        setTimeout(function() {
+            $('#alert').slideUp();
+        }, 4000);
+    </script>
 
 </body>
 
