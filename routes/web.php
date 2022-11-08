@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\backend\DonarController;
 use App\Http\Controllers\backend\HomeController;
 use App\Http\Controllers\backend\PatientController;
 use App\Models\Patient;
@@ -29,3 +30,10 @@ Route::post('/patient-save',[PatientController::class,'savePatient'])->name('pat
 Route::get('/patient-edit/{id}',[PatientController::class,'edit'])->name('patient.edit');
 Route::put('/patient-update/{id}',[PatientController::class,'updatePatient'])->name('patient.update');
 Route::get('/patient-delete/{id}',[PatientController::class,'deletePatient'])->name('patient.delete');
+
+
+// Donars Routes
+Route::get('/donar-form',[DonarController::class,'donarForm'])->name('donar.form');
+Route::get('/all-donars',[DonarController::class,'allDonars'])->name('all.donar');
+Route::post('/create-donar',[DonarController::class,'createDonar'])->name('create.donar');
+Route::get('/donar-edit/{id}',[DonarController::class,'editDonar'])->name('edit.donar');
