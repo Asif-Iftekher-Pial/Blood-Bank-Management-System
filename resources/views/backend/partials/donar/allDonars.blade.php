@@ -56,7 +56,7 @@
                             <td>
                                 <div class="d-flex">
                                     <a class="btn btn-warning btn-sm" href="{{ route('edit.donar', $item->id) }}"> <i class="bi bi-pen"></i> </a>
-                                    <a class="btn btn-danger btn-sm" href="{{ route('patient.delete', $item->id) }}"> <i class="bi bi-trash"></i></a>
+                                    <a class="btn btn-danger btn-sm" href="{{ route('delete.donar', $item->id) }}"> <i class="bi bi-trash"></i></a>
                                 </div>
                             </td>
                         </tr>

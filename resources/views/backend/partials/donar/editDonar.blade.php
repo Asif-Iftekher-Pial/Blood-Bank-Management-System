@@ -22,7 +22,8 @@
             </div>
         @endif
         <!-- Multi Columns Form -->
-        <form action="#" method="POST" class="row g-3" enctype="multipart/form-data">
+        <form action="{{ route('update.donar', $data->id) }}" method="POST" class="row g-3" enctype="multipart/form-data">
+            @method('put')
             @csrf
             <div class="col-md-12">
                 <label for="inputName5" class="form-label">Donar  Name</label>
@@ -57,6 +58,9 @@
                     <option value="AB+">AB+</option>
                     <option value="AB-">AB-</option>
                 </select>
+            </div>
+            <div class="col-12">
+                <img style="width: 80px" src="{{ asset('backend/images/donar/'. $data->d_image) }}" alt="" srcset="">
             </div>
             <div class="col-12">
                 <label for="inputAddress2" class="form-label">Donar Image</label>

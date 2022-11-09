@@ -37,3 +37,5 @@ Route::get('/donar-form',[DonarController::class,'donarForm'])->name('donar.form
 Route::get('/all-donars',[DonarController::class,'allDonars'])->name('all.donar');
 Route::post('/create-donar',[DonarController::class,'createDonar'])->name('create.donar');
 Route::get('/donar-edit/{id}',[DonarController::class,'editDonar'])->name('edit.donar');
+Route::put('/donar-update/{id}',[DonarController::class,'updateDonar'])->name('update.donar');Route::put('/donar-update/{id}',[DonarController::class,'updateDonar'])->name('update.donar');
+Route::get('/donar-delete/{id}',[DonarController::class,'deleteDonar'])->name('delete.donar');

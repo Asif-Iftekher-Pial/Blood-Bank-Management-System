@@ -70,10 +70,51 @@ class DonarController extends Controller
 
     public function updateDonar(Request $request, $id)
     { //update donar information
+        $request->validate([
+            'd_name' => 'required|string',
+            'd_age' => 'required|numeric',
+            'd_mobile' => 'required|numeric',
+            'd_address' => 'required|string',
+            'd_disease' => 'required|string',
+            'd_blood_group' => 'required',
+            'd_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
 
+        $currentID = Donar::find($id);
+
+        if ($request->file('d_image')) {
+            $file = $request->file('d_image');
+            $filename = date('Ymdhms') . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('backend/images/donar/'), $filename);
+
+            @unlink(public_path('backend/images/donar/') . $currentID->d_image); // delete previous image
+        }
+
+        $currentID->update([
+            'd_name' => $request->d_name,
+            'd_age' => $request->d_age,
+            'd_mobile' => $request->d_mobile,
+            'd_address' => $request->d_address,
+            'd_disease' => $request->d_disease,
+            'd_blood_group' => $request->d_blood_group,
+            'd_image' => $filename,
+
+        ]);
+        $id = $currentID->id;
+        $updateStock = BloodStock::where('donar_id', $id)->first();
+        // dd($updateStock);
+        $updateStock->update([
+            'donar_id' => $id,
+            'blood_group' => $currentID->d_blood_group,
+            'avalability' => 'ready',
+        ]);
+        return redirect()->back()->with('message', 'Donar updated successfully');
     }
     public function deleteDonar($id)
     {
-
+       $delete = Donar::where('id', $id)->first();
+       @unlink(public_path('backend/images/donar/') . $delete->d_image);
+       $delete->delete();
+       return redirect()->back()->with('message', 'Donar deleted successfully');
     }
 }
