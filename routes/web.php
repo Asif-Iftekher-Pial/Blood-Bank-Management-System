@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\backend\auth\AuthenticationController;
-use App\Http\Controllers\backend\BloodStockController;
-use App\Http\Controllers\backend\DonarController;
-use App\Http\Controllers\backend\HomeController;
-use App\Http\Controllers\backend\PatientController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\backend\HomeController;
+use App\Http\Controllers\backend\DonarController;
+use App\Http\Controllers\backend\PatientController;
+use App\Http\Controllers\backend\BloodStockController;
+use App\Http\Controllers\backend\SendRequestController;
+use App\Http\Controllers\backend\auth\AuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +73,9 @@ Route::group(['prefix' => 'app'], function () {
 
         Route::get('/blood-stock-list',[BloodStockController::class, 'stockList'])->name('blood.stock.list');
         Route::get('/donar-profile/{id}',[BloodStockController::class, 'donarProfile'])->name('donar.profile');
+
+        // Send Request
+        Route::get('/send-request/donar={donar_id}/user={user_id}',[SendRequestController::class, 'sendRequest'])->name('send.request');
 
     });
 
