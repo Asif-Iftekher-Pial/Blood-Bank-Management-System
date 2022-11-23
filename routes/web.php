@@ -76,6 +76,7 @@ Route::group(['prefix' => 'app'], function () {
 
         // Send Request
         Route::get('/send-request/donar={donar_id}/user={user_id}',[SendRequestController::class, 'sendRequest'])->name('send.request');
+        Route::get('/delete-request/donar={donar_id}/user={user_id}',[SendRequestController::class, 'deleteRequest'])->name('delete.request');
 
     });
 

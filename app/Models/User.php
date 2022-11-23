@@ -23,6 +23,10 @@ class User extends Authenticatable
         'position',
     ];
 
+    public function donar_info()
+    {
+        return $this->hasOne(Donar::class);
+    }
 
     public function donar()
     {

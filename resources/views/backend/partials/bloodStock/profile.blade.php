@@ -5,6 +5,12 @@
             <div class="col-xl-4">
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                        @if (session()->has('message'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert">
+                                {{ session()->get('message') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
                         <img src="{{ asset('backend/images/donar/' . $profile->d_image) }}" alt="Profile"
                             class="rounded-circle">
                         <h2>{{ $profile->d_name }}</h2>
@@ -17,18 +23,17 @@
                                     ->first();
                             @endphp
                             {{-- @dd($exists) --}}
-                            @if ($exists)
-                                {{-- request sent already --}}
+                            @if ($exists == !null) 
                                 <div>
                                     <a href="#"class="btn btn-sm btn-success text-white"> Sent <i
                                             class="bi bi-check-all"></i></a>
-                                    <a href="{{ route('send.request', ['donar_id' => $profile->id, 'user_id' => Auth::user()->id]) }}"
+                                    <a href="{{ route('delete.request', ['donar_id' => $profile->id, 'user_id' => Auth::user()->id]) }}"
                                         class="btn btn-sm btn-danger text-white">Cancel <i
                                             class="bi bi-x-square-fill"></i></a>
                                 </div>
                             @else
                                 <a href="{{ route('send.request', ['donar_id' => $profile->id, 'user_id' => Auth::user()->id]) }}"
-                                    class="btn btn-sm btn-success text-white"> Send Request <i class="bi bi-send"></i></a>
+                                    class="btn btn-sm btn-primary text-white"> Send Request <i class="bi bi-send"></i></a>
                             @endif
 
                         </div>

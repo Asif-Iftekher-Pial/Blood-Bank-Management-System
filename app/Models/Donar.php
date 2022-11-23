@@ -31,6 +31,11 @@ class Donar extends Model
         return $this->hasOne(DonatedUser::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 
 
     
