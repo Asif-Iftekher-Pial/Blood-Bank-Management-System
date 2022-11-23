@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('donated_users', function (Blueprint $table) {
             $table->id();
-            $table->enum('position',['Admin','Donar'])->default('Donar');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignId('blood_stock_id')->references('id')->on('blood_stocks')->onDelete('cascade');
+            $table->foreignId('donar_id')->references('id')->on('donars')->onDelete('cascade');
+            $table->string('last_donation_date');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('donated_users');
     }
 };

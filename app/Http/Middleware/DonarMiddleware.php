@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminMiddleware
+class DonarMiddleware
 {
     /**
      * Handle an incoming request.
@@ -19,15 +19,15 @@ class AdminMiddleware
     {
         if(Auth::check()){ // check, if user is authenticated 
             
-            if(Auth::user()->position =='Admin'){
+            if(Auth::user()->position =='Donar'){
                 return $next($request);
             }else{
                 Auth::logout();
-                return redirect()->route('login.page')->with('message','You are not admin');
+                return redirect()->route('donar.login')->with('message','You are not donar');
             }
         }else{
             Auth::logout();
-            return redirect()->route('login.page')->with('message','Please login first');
+            return redirect()->route('donar.login')->with('message','Please login first');
         }
     }
 }

@@ -2,53 +2,88 @@
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
-      <li class="nav-item">
-        <a class="nav-link " href="{{ route('dashboard') }}">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
+        @if (Auth::user()->position == 'Admin')
+            <li class="nav-item">
+                <a class="nav-link " href="{{ route('dashboard') }}">
+                    <i class="bi bi-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-person"></i><span>Patient Management</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{{ route('allPatients') }}">
-              <i class="bi bi-circle"></i><span>All Patients</span>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-person"></i><span>Patient Management</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ route('allPatients') }}">
+                            <i class="bi bi-circle"></i><span>All Patients</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('create.patient') }}">
+                            <i class="bi bi-circle"></i><span>Create Patient</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-journal-text"></i><span>Donar Management</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ route('all.donar') }}">
+                            <i class="bi bi-circle"></i><span>All Donars</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('donar.form') }}">
+                            <i class="bi bi-circle"></i><span>Create Donar Form</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-layout-text-window-reverse"></i><span>Blood</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                  <a href="{{ route('blood.stock.list') }}">
+                    <i class="bi bi-circle"></i><span>Blood groups</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+        @endif
+          
+        @if (Auth::user()->position == 'Donar')
+        <li class="nav-item">
+            <a class="nav-link " href="{{ route('donar.dashboard') }}">
+                <i class="bi bi-grid"></i>
+                <span>Donar Dashboard</span>
             </a>
-          </li>
-          <li>
-            <a href="{{ route('create.patient') }}">
-              <i class="bi bi-circle"></i><span>Create Patient</span>
+        </li><!-- End Dashboard Nav -->
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-person"></i><span>My Profile</span>
             </a>
-          </li>
-        </ul>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>Donar Management</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{{ route('all.donar') }}">
-              <i class="bi bi-circle"></i><span>All Donars</span>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-journal-text"></i><span>Donate Request</span><span class="badge bg-primary badge-number ms-2">0</span>
             </a>
-          </li>
-          <li>
-            <a href="{{ route('donar.form') }}">
-              <i class="bi bi-circle"></i><span>Create Donar Form</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Forms Nav -->
-      
-      
-      <!-- End Components Nav -->
-{{-- 
+           
+        </li> 
+    @endif
+
+        {{-- 
      
-      {{  --
+     
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -166,4 +201,4 @@
 
     </ul>
 
-  </aside>
+</aside>

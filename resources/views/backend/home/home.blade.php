@@ -1,6 +1,7 @@
 @extends('master')
 @section('main')
-    <!-- Left side columns -->
+   @if (Auth::user()->position == 'Admin')
+        <!-- Left side columns -->
     <div class="col-lg-8">
 
         @if (session()->has('message'))
@@ -663,4 +664,7 @@
 
     </div>
     <!-- End Right side columns -->
+   @else
+      <h2>Hello- {{ App\Models\Donar::where('user_id',Auth::user()->id)->pluck('d_name')->first() }} !</h2>
+   @endif
 @endsection

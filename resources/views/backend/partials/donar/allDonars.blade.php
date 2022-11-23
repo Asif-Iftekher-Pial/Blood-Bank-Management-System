@@ -27,12 +27,13 @@
                         <th scope="col">#</th>
                         <th scope="col">Image</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Blood Group</th>
+                        <th scope="col">Group</th>
                         <th scope="col">Age</th>
                         <th scope="col">Mobile</th>
                         <th scope="col">Address</th>
                         <th scope="col">Disease</th>
-                        <th scope="col">Availability</th>
+                        <th scope="col">Available</th>
+                        <th scope="col">permission</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -52,10 +53,39 @@
                             @php
                                 $avalability = app\Models\BloodStock::where('donar_id', $item->id)->pluck('avalability')->first();
                             @endphp
+
                             <td>{{ ucfirst($avalability) }}</td>
                             <td>
+                                <div class="dropdown">
+                                    <a class="btn
+                                    @if ($item->status == 'pending')
+                                    btn-warning
+                                    @elseif($item->status == 'approved')
+                                    btn-success
+                                    @else
+                                    btn-danger
+                                    @endif
+                                    dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                      {{ $item->status }}
+                                    </a>
+                                  
+                                    <ul class="dropdown-menu">
+                                        @if ($item->status == 'pending')
+                                        <li><a class="dropdown-item" href="{{ route('donar.status',['id'=>$item->id , 'status' => 'approved']) }}">Approve</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('donar.status',['id'=>$item->id , 'status' => 'rejected']) }}">Rejected</a></li>
+                                        @elseif ($item->status == 'approved')
+                                        <li><a class="dropdown-item" href="{{ route('donar.status',['id'=>$item->id , 'status' => 'pending']) }}">Pending</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('donar.status',['id'=>$item->id , 'status' => 'rejected']) }}">Rejected</a></li>
+                                        @else
+                                        <li><a class="dropdown-item" href="{{ route('donar.status',['id'=>$item->id , 'status' => 'approved']) }}">Approve</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('donar.status',['id'=>$item->id , 'status' => 'pending']) }}">Pending</a></li>
+                                        @endif
+                                    </ul>
+                                  </div>
+                            </td>
+                            <td>
                                 <div class="d-flex">
-                                    <a class="btn btn-warning btn-sm" href="{{ route('edit.donar', $item->id) }}"> <i class="bi bi-pen"></i> </a>
+                                    
                                     <a class="btn btn-danger btn-sm" href="{{ route('delete.donar', $item->id) }}"> <i class="bi bi-trash"></i></a>
                                 </div>
                             </td>

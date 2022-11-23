@@ -59,6 +59,18 @@
                 </select>
             </div>
             <div class="col-12">
+                <label for="" class="form-label">Donation status</label>
+                <select class="form-select" name="status" aria-label="Default select example">
+                    <option selected>Ready or Already Donated?</option>
+                    <option value="ready">Ready</option>
+                    <option value="already_donated">Already Donate</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <label for="" class="form-label"> Last Donation Date</label>
+                <input type="date" class="form-control" name="last_donation_date" id="" required>
+            </div>
+            <div class="col-12">
                 <label for="inputAddress2" class="form-label">Donar Image</label>
                 <input type="file" name="d_image" class="form-control" id="inputAddress2">
             </div>

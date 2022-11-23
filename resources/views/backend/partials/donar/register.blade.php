@@ -48,10 +48,10 @@
                 class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                        <div class="col-lg-10 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
                             <div class="d-flex justify-content-center py-4">
-                                <a href="{{ route('login.page') }}" class="logo d-flex align-items-center w-auto">
+                                <a href="#" class="logo d-flex align-items-center w-auto">
                                     <img src="{{ asset('backend/assets/img/logo.png') }}" alt="">
                                     <span class="d-none d-lg-block">BBMS</span>
                                 </a>
@@ -62,9 +62,8 @@
                                 <div class="card-body">
                                     
                                     <div class="pt-4 pb-2">
-                                        <p class="text-center display-6 text-decoration-underline">Admin</p>
-                                        <h5 class="card-title text-center pt-0 pb-0 fs-4">Login to Your Account</h5>
-                                        <p class="text-center small">Enter your email & password to login</p>
+                                        <p class="text-center display-6 text-decoration-underline">Donar</p>
+                                        <h5 class="card-title text-center pt-0 pb-0 fs-4">Register Your Account</h5>
                                     </div>
                                     @if (session()->has('message'))
                                         <div class="alert alert-success alert-dismissible fade show" role="alert"
@@ -84,21 +83,89 @@
                                             </ul>
                                         </div>
                                     @endif
+                           
 
-                                    <form action="{{ route('login.submit') }}" method="POST"
+                                    <form action="{{ route('donar.registration.submit') }}" method="POST" enctype="multipart/form-data"
                                         class="row g-3 needs-validation" novalidate>
                                         @csrf
                                         <div class="col-12">
                                             <label for="yourUsername" class="form-label">Email</label>
                                             <div class="input-group has-validation">
-                                                <input type="email" name="email" class="form-control" @if (Cookie::has('backendcookieNameEmail')) value="{{ Cookie::get('backendcookieNameEmail') }}" @endif  required>
+                                                <input type="email" name="email" class="form-control"  required>
                                                 <div class="invalid-feedback">Please enter your email.</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="yourUsername" class="form-label">Name</label>
+                                            <div class="input-group has-validation">
+                                                <input type="text" name="d_name" class="form-control"  required>
+                                                <div class="invalid-feedback">Please enter your name.</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="yourUsername" class="form-label">Age</label>
+                                            <div class="input-group has-validation">
+                                                <input type="number" name="d_age" class="form-control"  required>
+                                                <div class="invalid-feedback">Please enter your age.</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="yourUsername" class="form-label">Mobile</label>
+                                            <div class="input-group has-validation">
+                                                <input type="text" name="d_mobile" class="form-control"  required>
+                                                <div class="invalid-feedback">Please enter your mobile.</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="yourUsername" class="form-label">Disease</label>
+                                            <div class="input-group has-validation">
+                                                <input type="text" name="d_disease" class="form-control"  required>
+                                                <div class="invalid-feedback">Please enter your disease.</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="yourUsername" class="form-label">Address</label>
+                                            <div class="input-group has-validation">
+                                                <input type="text" name="d_address" class="form-control"  required>
+                                                <div class="invalid-feedback">Please enter your address.</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="" class="form-label">Select Blood Group</label>
+                                        <select class="form-select" name="d_blood_group" aria-label="Default select example">
+                                            <option selected>Select Blood Group</option>
+                                            <option value="A+">A+</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B-">B-</option>
+                                            <option value="O+">O+</option>
+                                            <option value="O-">O-</option>
+                                            <option value="AB+">AB+</option>
+                                            <option value="AB-">AB-</option>
+                                        </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="" class="form-label">Donation status</label>
+                                            <select class="form-select" name="status" aria-label="Default select example">
+                                                <option selected>Ready or Already Donated?</option>
+                                                <option value="ready">Ready</option>
+                                                <option value="already_donated">Already Donate</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="" class="form-label"> Last Donation Date</label>
+                                            <input type="date" class="form-control" name="last_donation_date" id="" required>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="yourUsername" class="form-label">Image</label>
+                                            <div class="input-group has-validation">
+                                                <input type="file" name="d_image" class="form-control"  required>
                                             </div>
                                         </div>
 
                                         <div class="col-12">
                                             <label for="yourPassword" class="form-label">Password</label>
-                                            <input type="password" name="password" class="form-control" @if (Cookie::has('backendcookieNamePassword')) value="{{ Cookie::get('backendcookieNamePassword') }}" @endif id="yourPassword" required>
+                                            <input type="password" name="password" class="form-control"  id="yourPassword" required>
                                             <div class="invalid-feedback">Please enter your password!</div>
                                         </div>
 
@@ -110,7 +177,7 @@
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit">Login</button>
+                                            <button class="btn btn-primary w-100" type="submit">Registar</button>
                                         </div>
                                     </form>
                                 </div>

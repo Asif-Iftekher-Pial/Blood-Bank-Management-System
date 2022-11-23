@@ -20,16 +20,14 @@ class User extends Authenticatable
     protected $fillable = [
         'email',
         'password',
-        'full_name',
-        'image',
-        'about',
-        'company',
-        'address',
-        'phone',
-        't_profile',
-        'f_profile',
         'position',
     ];
+
+
+    public function donar()
+    {
+        return $this->hasMany(Donar::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

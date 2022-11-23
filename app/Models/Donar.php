@@ -15,13 +15,20 @@ class Donar extends Model
         'd_mobile',
         'd_disease',
         'd_address',
-        'd_blood_group'
+        'd_blood_group',
+        'user_id',
+        'status'
     ];
 
 
     public function blood_stock()
     {
         return $this->hasOne(BloodStock::class);
+    }
+
+    public function donated_user()
+    {
+        return $this->hasOne(DonatedUser::class);
     }
 
 
