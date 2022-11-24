@@ -23,14 +23,21 @@
                                     ->first();
                             @endphp
                             {{-- @dd($exists) --}}
-                            @if ($exists == !null) 
-                                <div>
-                                    <a href="#"class="btn btn-sm btn-success text-white"> Sent <i
+                            @if ($exists == !null)
+                                @if ($exists->action == 'sent')
+                                    <div>
+                                        <a href="#"class="btn btn-sm btn-success text-white"> Sent <i
+                                                class="bi bi-check-all"></i></a>
+                                        <a href="{{ route('delete.request', ['donar_id' => $profile->id, 'user_id' => Auth::user()->id]) }}"
+                                            class="btn btn-sm btn-danger text-white">Cancel <i
+                                                class="bi bi-x-square-fill"></i></a>
+                                    </div>
+                                @else
+                                    <div>
+                                        <a href="#" onclick="return alert('Donar have accepted your request!')" class="btn btn-sm btn-success text-white"> Confirmed <i
                                             class="bi bi-check-all"></i></a>
-                                    <a href="{{ route('delete.request', ['donar_id' => $profile->id, 'user_id' => Auth::user()->id]) }}"
-                                        class="btn btn-sm btn-danger text-white">Cancel <i
-                                            class="bi bi-x-square-fill"></i></a>
-                                </div>
+                                    </div>
+                                @endif
                             @else
                                 <a href="{{ route('send.request', ['donar_id' => $profile->id, 'user_id' => Auth::user()->id]) }}"
                                     class="btn btn-sm btn-primary text-white"> Send Request <i class="bi bi-send"></i></a>

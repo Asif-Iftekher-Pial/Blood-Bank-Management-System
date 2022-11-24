@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable();
             $table->foreignId('donar_id');
             $table->foreignId('patient_id')->nullable();
+            $table->enum('action',['sent','confirmed'])->default('sent');
             $table->timestamps();
         });
     }

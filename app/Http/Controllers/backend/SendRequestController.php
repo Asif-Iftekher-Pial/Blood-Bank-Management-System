@@ -42,4 +42,18 @@ class SendRequestController extends Controller
         $delete->delete();
         return back()->with('message', 'Request cancled!');
     }
+
+    public function requestedList(){
+    //    $test = Auth::user()->with('donar_info')->get();
+    //    dd($test);
+        $myID = Donar::where('user_id', Auth::user()->id)->pluck('id')->first();
+        // return $myID;
+        // filter my ID from blood request table 
+        $brTableMyId= BloodRequest::where('donar_id',$myID)->with('patients')->get();
+        dd($brTableMyId);
+        // $userReq = User::
+    }
+    public function confirmRequest(){
+
+    }
 }

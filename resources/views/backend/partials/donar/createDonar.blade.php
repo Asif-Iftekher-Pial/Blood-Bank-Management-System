@@ -61,7 +61,7 @@
             <div class="col-12">
                 <label for="" class="form-label">Donation status</label>
                 <select class="form-select" name="status" aria-label="Default select example">
-                    <option selected>Ready or Already Donated?</option>
+                    
                     <option value="ready">Ready</option>
                     <option value="already_donated">Already Donate</option>
                 </select>

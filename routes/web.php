@@ -7,6 +7,7 @@ use App\Http\Controllers\backend\PatientController;
 use App\Http\Controllers\backend\BloodStockController;
 use App\Http\Controllers\backend\SendRequestController;
 use App\Http\Controllers\backend\auth\AuthenticationController;
+use App\Http\Controllers\backend\BloodBankController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,7 +39,9 @@ Route::group(['prefix' => 'app'], function () {
         Route::group(['middleware' =>'donar'],function () {
              // home pages
                 Route::get('/', [HomeController::class, 'dashboard'])->name('donar.dashboard');
-
+                Route::get('/donate-blood-to-bank',[BloodBankController::class,'donateNow'])->name('donate.bloodToBank');
+                Route::post('/save-donate-blood-to-bank',[BloodBankController::class,'donateSaveifo'])->name('donate.bloodToBank.save');
+                Route::get('/requested-list',[SendRequestController::class,'requestedList'])->name('requestedList');
         });
 
     });
@@ -77,7 +80,9 @@ Route::group(['prefix' => 'app'], function () {
         // Send Request
         Route::get('/send-request/donar={donar_id}/user={user_id}',[SendRequestController::class, 'sendRequest'])->name('send.request');
         Route::get('/delete-request/donar={donar_id}/user={user_id}',[SendRequestController::class, 'deleteRequest'])->name('delete.request');
-
+        // Bank
+        Route::get('/blood-bank',[BloodBankController::class,'bloodList'])->name('blood.list');
+        Route::get('/delete-bank-blood/{id}',[BloodBankController::class,'deleteBankBlood'])->name('deleteBankBlood');
     });
 
 });

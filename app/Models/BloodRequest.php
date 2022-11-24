@@ -12,4 +12,9 @@ class BloodRequest extends Model
     protected $fillable=[
         'user_id','donar_id','patient_id'
     ];
+
+    public function patients()
+    {
+        return $this->belongsTo(Patient::class,'patient_id','id');
+    }
 }

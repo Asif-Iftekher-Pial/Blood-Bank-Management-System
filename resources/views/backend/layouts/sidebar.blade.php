@@ -59,7 +59,26 @@
                     </li>
                 </ul>
             </li>
+           
+            <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-droplet-fill"></i><span>Blood Bank</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                  <a href="{{ route('blood.list') }}">
+                    <i class="bi bi-circle"></i><span>Blood Bank Blood</span>
+                  </a>
+                </li>
+              </ul>
+            </li><!-- End Charts Nav -->
+            
         @endif
+
+
+
+
+        {{-- -----------------------------------------Donor SideBar----------------------------------- --}}
         @if (Auth::user()->position == 'Donar')
             <li class="nav-item">
                 <a class="nav-link " href="{{ route('donar.dashboard') }}">
@@ -75,8 +94,9 @@
             </li>
             @php
                 $authID = Auth::user()->id;
-                $logedInDonorID = App\Models\Donar::where('user_id', $authID)->pluck('id')->first();
-
+                $logedInDonorID = App\Models\Donar::where('user_id', $authID)
+                    ->pluck('id')
+                    ->first();
                 $total_req = App\Models\BloodRequest::where('donar_id', $logedInDonorID)->count('user_id');
             @endphp
             {{-- @dd($total_req) --}}
@@ -84,57 +104,37 @@
                 <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-journal-text"></i><span>Donate Request</span>
                     @if ($total_req > 0)
-                    <span class="badge bg-primary badge-number ms-2">{{ $total_req }}</span>
+                        <span class="badge bg-primary badge-number ms-2" style="font-size: 15px;">{{ $total_req }}</span>
                     @else
-                    <span class="badge bg-primary badge-number ms-2">0</span>
+                        <span class="badge bg-primary badge-number ms-2" style="font-size: 15px;">0</span>
                     @endif
+                    <i class="bi bi-chevron-down ms-auto"></i>
                 </a>
+                <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                  <li>
+                      <a href="{{ route('requestedList') }}">
+                          <i class="bi bi-circle"></i><span>Requeste List</span>
+                      </a>
+                  </li>
+              </ul>
+
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>Donate Blood </span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="{{ route('donate.bloodToBank') }}">
+                            <i class="bi bi-circle"></i><span>Blood Bank</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
         @endif
 
-        {{-- 
-     
-     
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="tables-general.html">
-              <i class="bi bi-circle"></i><span>General Tables</span>
-            </a>
-          </li>
-          <li>
-            <a href="tables-data.html">
-              <i class="bi bi-circle"></i><span>Data Tables</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Tables Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="charts-chartjs.html">
-              <i class="bi bi-circle"></i><span>Chart.js</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-apexcharts.html">
-              <i class="bi bi-circle"></i><span>ApexCharts</span>
-            </a>
-          </li>
-          <li>
-            <a href="charts-echarts.html">
-              <i class="bi bi-circle"></i><span>ECharts</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Charts Nav -->
+        {{--
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
