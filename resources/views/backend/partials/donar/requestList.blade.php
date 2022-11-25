@@ -9,6 +9,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
+            @if (session()->has('error'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert">
+                    {{ session()->get('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             {{-- error message --}}
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -49,7 +55,7 @@
                             @else
                             <a href="{{ route('confirm.request',$item->id) }}" class="btn btn-sm btn-primary">Confirm Request</a>
                             @endif
-                            <a href="#" class="btn btn-sm btn-danger mt-2">Delete Request</a>
+                            <a href="{{ route('donar.delete.request',$item->id) }}" class="btn btn-sm btn-danger mt-2">Delete Request</a>
 
                         </td>
                     </tr>

@@ -64,4 +64,15 @@ class SendRequestController extends Controller
         return back()->with('message','Request confirmed!');
 
     }
+
+    public function deletePatientRequest($user_id){
+        $myID = Donar::where('user_id', Auth::user()->id)->pluck('id')->first();
+        $data = BloodRequest::where('donar_id',$myID)->where('user_id',$user_id)->first();
+        //dd($data);
+        $data->delete();
+        return back()->with('error','Request removed!');
+
+    }
+
+
 }

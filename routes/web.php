@@ -75,6 +75,7 @@ Route::group(['prefix' => 'app'], function () {
             Route::post('/save-donate-blood-to-bank', [BloodBankController::class, 'donateSaveifo'])->name('donate.bloodToBank.save');
             Route::get('/requested-list', [SendRequestController::class, 'requestedList'])->name('requestedList');
             Route::get('/confirm-request/user={user_id}', [SendRequestController::class, 'confirmRequest'])->name('confirm.request');
+            Route::get('/delete-request/user={user_id}', [SendRequestController::class, 'deletePatientRequest'])->name('donar.delete.request');
         });
 
     });
