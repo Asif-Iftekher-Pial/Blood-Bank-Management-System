@@ -10,7 +10,7 @@ class BloodRequest extends Model
     use HasFactory;
 
     protected $fillable=[
-        'user_id','donar_id','patient_id'
+        'user_id','donar_id','patient_id','action'
     ];
 
     public function patients()

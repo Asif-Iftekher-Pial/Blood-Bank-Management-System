@@ -34,13 +34,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($bank_donar as $key =>$item)
+                    @foreach ($brTableMyId as $key =>$item)
                     <tr>
                         <th scope="row">{{ $key + 1 }}</th>
-                        <td>{{ $item->bank_donated_donar->id }}</td>
-                        <td>{{ $item->blood_group }}</td>
+                        <td>{{ $item->patients->patient_name }}</td>
+                        <td>{{ App\Models\User::where('id',$item->user_id)->pluck('email')->first() }}</td>
+                        <td>{{ $item->patients->patient_mobile }}</td>
+                        <td>{{ $item->patients->patient_reason }}</td>
                         <td>{{ $item->created_at }}</td>
-                        <td><a href="{{ route('deleteBankBlood',$item->id) }}" class="btn btn-sm btn-danger"><span class="bi bi-trash"></span></a></td>
+                        <td>
+                            @if ($item->action == 'confirmed')
+                            <a href="#" onclick="return alert('You have already confirmed this request!')" class="btn btn-sm btn-success text-white"> Confirmed <i
+                                class="bi bi-check-all"></i></a>
+                            @else
+                            <a href="{{ route('confirm.request',$item->id) }}" class="btn btn-sm btn-primary">Confirm Request</a>
+                            @endif
+                            <a href="#" class="btn btn-sm btn-danger mt-2">Delete Request</a>
+
+                        </td>
                     </tr>
                    
                     @endforeach
