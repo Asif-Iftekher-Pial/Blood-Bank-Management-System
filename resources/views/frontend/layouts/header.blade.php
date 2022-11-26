@@ -82,7 +82,7 @@
                                     <a class="nav-link" href="{{ route('donarList') }}">Donars</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Blood Bank</a>
+                                    <a class="nav-link" href="{{ route('bloodBankList') }}">Blood Bank</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#blog">Blog</a>

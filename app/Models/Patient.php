@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\BloodBankRequest;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Patient extends Model
 {
@@ -16,6 +17,8 @@ class Patient extends Model
         'patient_mobile',
         'patient_reason',
     ];
+
+
     
     	
 }

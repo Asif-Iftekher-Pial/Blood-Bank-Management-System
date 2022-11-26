@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\backend;
 
 use App\Models\Donar;
+use App\Models\Patient;
 use App\Models\BloodBank;
 use App\Models\BloodStock;
 use App\Models\DonatedUser;
 use App\Models\BloodRequest;
 use Illuminate\Http\Request;
+use App\Models\BloodBankRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -80,4 +82,42 @@ class BloodBankController extends Controller
         $delete->delete();
         return back()->with('message','Blood deleted from the bank list');
     }
+
+
+    // message response
+
+    public function messageLists(){
+        $allPatients = BloodBankRequest::with('patientMessage','bloodGroup')->paginate(10);
+        // return $allPatients;
+        return view('backend.partials.messages.allMessages',compact('allPatients'));
+    }
+
+    public function seeMessage($id,$blood_bank_id,$patient_id){
+        // return [$id,$blood_bank_id,$patient_id];
+
+        $messages = BloodBankRequest::where([
+            'id'=>$id,
+            'patient_id'=>$patient_id,
+            'blood_bank_id'=>$blood_bank_id
+        ])->first();
+        // return $messages;
+
+        return view('backend.partials.messages.messageBox',compact('messages'));
+    }
+
+    public function replyMessage(Request $request,$id,$blood_bank_id,$patient_id){
+        // return [ $request->all(), $id,$blood_bank_id,$patient_id];
+        $data = $request->all();
+        $messages = BloodBankRequest::where([
+            'id'=>$id,
+            'patient_id'=>$patient_id,
+            'blood_bank_id'=>$blood_bank_id
+        ])->first();
+        // return $messages;
+            
+        $messages->fill($data)->save();
+        return back()->with('message','Reply sent to the patient');
+    }
+
+
 }

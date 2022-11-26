@@ -48,7 +48,7 @@
                             <td>{{ $item->patient_address }}</td>
                             <td>{{ $item->patient_reason }}</td>
                             <td>
-                                <a class="btn btn-warning btn-sm" href="{{ route('patient.edit', $item->id) }}"> <i class="bi bi-pen"></i> </a>
+                                {{-- <a class="btn btn-warning btn-sm" href="{{ route('patient.edit', $item->id) }}"> <i class="bi bi-pen"></i> </a> --}}
                                 <a class="btn btn-danger btn-sm" href="{{ route('patient.delete', $item->id) }}"> <i class="bi bi-trash"></i></a>
                             </td>
                         </tr>

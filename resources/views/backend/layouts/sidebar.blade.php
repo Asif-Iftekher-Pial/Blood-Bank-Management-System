@@ -21,11 +21,11 @@
                             <i class="bi bi-circle"></i><span>All Patients</span>
                         </a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a href="{{ route('create.patient') }}">
                             <i class="bi bi-circle"></i><span>Create Patient</span>
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </li>
             <li class="nav-item">
@@ -72,6 +72,19 @@
                 </li>
               </ul>
             </li><!-- End Charts Nav -->
+
+            <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-envelope"></i><span>Messages</span><i class="badge badge-primary">({{ App\Models\BloodBankRequest::count()}})</i><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                  <a href="{{ route('messageLists') }}">
+                    <i class="bi bi-circle"></i><span>All messages</span>
+                  </a>
+                </li>
+              </ul>
+            </li><!-- End Icons Nav -->
             
         @endif
 

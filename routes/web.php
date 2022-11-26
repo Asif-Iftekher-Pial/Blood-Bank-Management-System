@@ -8,6 +8,7 @@ use App\Http\Controllers\backend\HomeController;
 use App\Http\Controllers\backend\PatientController;
 use App\Http\Controllers\backend\SendRequestController;
 use App\Http\Controllers\frontend\AuthController;
+use App\Http\Controllers\frontend\BloodBankController as FrontendBloodBankController;
 use App\Http\Controllers\frontend\DonarController as FrontendDonarController;
 use App\Http\Controllers\frontend\HomeController as FrontendHomeController;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,10 @@ Route::group(['prefix' => 'patient','middleware' =>'auth'],function () {
     Route::get('/cancel-sent-request/donar_id={donar_id}/patient_id={patient_id}/user_id={user_id}',
     [FrontendDonarController::class,'deleteRequest'])->name('patient.delete.request');
 
+    Route::get('/blood-bank',[FrontendBloodBankController::class,'bloodBankList'])->name('bloodBankList');
+    // Messege to admin
+    Route::get('/message-to-admin/{id}',[FrontendBloodBankController::class,'message'])->name('messageToAdmin');
+    Route::post('/send-message',[FrontendBloodBankController::class,'sendMessage'])->name('sendMessage');
 
 });
 
@@ -115,6 +120,11 @@ Route::group(['prefix' => 'app'], function () {
         // Bank
         Route::get('/blood-bank', [BloodBankController::class, 'bloodList'])->name('blood.list');
         Route::get('/delete-bank-blood/{id}', [BloodBankController::class, 'deleteBankBlood'])->name('deleteBankBlood');
+
+        // message response
+        Route::get('/message-lists',[BloodBankController::class,'messageLists'])->name('messageLists');
+        Route::get('/see-message/bloodBankReq_id={id}/bloodBank_id={blood_bank_id}/patient_id={patient_id}',[BloodBankController::class, 'seeMessage'])->name('seeMessage');
+        Route::post('/reply-message/bloodBankReq_id={id}/bloodBank_id={blood_bank_id}/patient_id={patient_id}',[BloodBankController::class, 'replyMessage'])->name('replyMessage');
     });
 
 });
