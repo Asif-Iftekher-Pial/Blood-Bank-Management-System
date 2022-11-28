@@ -2,7 +2,7 @@
 @section('main')
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title text-center">All Donars</h5>
+            <p class="card-title text-center" >All Donars</p>
             @if (session()->has('message'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert">
                     {{ session()->get('message') }}

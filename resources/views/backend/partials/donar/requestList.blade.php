@@ -41,21 +41,65 @@
                 </thead>
                 <tbody>
                     @foreach ($brTableMyId as $key =>$item)
+
                     <tr>
                         <th scope="row">{{ $key + 1 }}</th>
+                        @if ($item->patient_id == !null)
                         <td>{{ $item->patients->patient_name }}</td>
+                        @else
+                        <td>Admin</td>
+                        @endif
+                        
                         <td>{{ App\Models\User::where('id',$item->user_id)->pluck('email')->first() }}</td>
+
+                        @if ($item->patient_id == !null)
                         <td>{{ $item->patients->patient_mobile }}</td>
+                        @else
+                        <td>Null</td>
+                        @endif
+
+                        
+
+                        @if ($item->patient_id == !null)
                         <td>{{ $item->patients->patient_reason }}</td>
+                        @else
+                        <td>Null</td>
+                        @endif
+                        
+
+
                         <td>{{ $item->created_at }}</td>
+
+
+
+
+
+
                         <td>
                             @if ($item->action == 'confirmed')
+
                             <a href="#" onclick="return alert('You have already confirmed this request!')" class="btn btn-sm btn-success text-white"> Confirmed <i
                                 class="bi bi-check-all"></i></a>
                             @else
-                            <a href="{{ route('confirm.request',$item->id) }}" class="btn btn-sm btn-primary">Confirm Request</a>
+
+
+
+                                @if ($item->patient_id == !null)
+
+                                
+                                <a href="{{ route('confirm.request',$item->user_id) }}" class="btn btn-sm btn-primary">Confirm Request</a>
+                            
+                                @else
+                                <a href="{{ route('confirm.request',$item->user_id) }}" class="btn btn-sm btn-primary">Confirm Request</a>
+                            
+                                @endif
+                            
+                            
                             @endif
-                            <a href="{{ route('donar.delete.request',$item->id) }}" class="btn btn-sm btn-danger mt-2">Delete Request</a>
+
+
+
+                            <a href="{{ route('donar.delete.request',$item->user_id) }}" class="btn btn-sm btn-danger mt-2">Delete Request</a>
 
                         </td>
                     </tr>

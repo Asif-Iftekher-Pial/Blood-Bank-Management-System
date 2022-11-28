@@ -119,5 +119,17 @@ class BloodBankController extends Controller
         return back()->with('message','Reply sent to the patient');
     }
 
+    // delete patient blood request from blood bank
+
+    public function removeMessage($id,$blood_bank_id,$patient_id){
+        // return [$id,$blood_bank_id,$patient_id];
+        BloodBankRequest::where([
+            'id'=>$id,
+            'patient_id'=>$patient_id,
+            'blood_bank_id'=>$blood_bank_id
+        ])->delete();
+        BloodBank::where('id',$blood_bank_id)->delete();
+        return back()->with('message','patient request removed');
+    }
 
 }

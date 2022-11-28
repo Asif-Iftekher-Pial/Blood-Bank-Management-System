@@ -50,14 +50,19 @@ class SendRequestController extends Controller
         // return $myID;
         // filter my ID from blood request table 
         $brTableMyId= BloodRequest::where('donar_id',$myID)->with('patients')->get();
-        // dd($brTableMyId);
+        //  dd($brTableMyId);
         return view('backend.partials.donar.requestList',compact('brTableMyId'));
     }
     
     public function confirmRequest($user_id){
-        $myID = Donar::where('user_id', Auth::user()->id)->pluck('id')->first();
-        $data = BloodRequest::where('donar_id',$myID)->where('user_id',$user_id)->first();
-        //dd($data);
+        // dd($user_id);
+        $donar_ID = Donar::where('user_id', Auth::user()->id)->pluck('id')->first();
+        // dd($myID);
+        $data = BloodRequest::where([
+            'donar_id'=>$donar_ID,
+            'user_id'=>$user_id
+            ])->first();
+        // dd($data);
         $data->update([
             'action'=>'confirmed'
         ]);

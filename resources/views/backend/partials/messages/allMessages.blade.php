@@ -57,7 +57,11 @@
                             ]) }}"> Reply </a>
 
                             
-                            <a class="btn btn-danger btn-sm" href="{{ route('patient.delete', $item->id) }}"> <i class="bi bi-trash"></i></a>
+                            <a class="btn btn-danger btn-sm" href="{{ route('removeMessage', [
+                                'id'=>$item->id,
+                                'patient_id'=>$item->patient_id,
+                                'blood_bank_id'=>$item->blood_bank_id
+                            ]) }}"> <i class="bi bi-trash"></i></a>
                         </td>
                     </tr>
                 @endforeach

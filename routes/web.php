@@ -125,6 +125,8 @@ Route::group(['prefix' => 'app'], function () {
         Route::get('/message-lists',[BloodBankController::class,'messageLists'])->name('messageLists');
         Route::get('/see-message/bloodBankReq_id={id}/bloodBank_id={blood_bank_id}/patient_id={patient_id}',[BloodBankController::class, 'seeMessage'])->name('seeMessage');
         Route::post('/reply-message/bloodBankReq_id={id}/bloodBank_id={blood_bank_id}/patient_id={patient_id}',[BloodBankController::class, 'replyMessage'])->name('replyMessage');
+        Route::get('/remove-message/bloodBankReq_id={id}/bloodBank_id={blood_bank_id}/patient_id={patient_id}',[BloodBankController::class, 'removeMessage'])->name('removeMessage');
+    
     });
 
 });

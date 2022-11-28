@@ -16,7 +16,7 @@
                     <div class="form-body">
                         <input type="email" name="email" placeholder="Enter Email Address" class="form-control">
                         <input type="text" name="patient_name" placeholder="Enter Name" class="form-control">
-                        <input type="text" name="patient_address" placeholder="Enter Email Address" class="form-control">
+                        <input type="text" name="patient_address" placeholder="Enter Address" class="form-control">
 
                         <input type="text" name="patient_reason" placeholder="Your Reason" class="form-control">
                         <input type="number" name="patient_age" placeholder="age" min="1" class="form-control">

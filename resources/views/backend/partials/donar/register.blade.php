@@ -112,7 +112,7 @@
                                         <div class="col-12">
                                             <label for="yourUsername" class="form-label">Mobile</label>
                                             <div class="input-group has-validation">
-                                                <input type="text" name="d_mobile" class="form-control"  required>
+                                                <input type="number" name="d_mobile" class="form-control"  required>
                                                 <div class="invalid-feedback">Please enter your mobile.</div>
                                             </div>
                                         </div>
