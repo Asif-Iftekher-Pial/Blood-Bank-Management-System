@@ -82,15 +82,13 @@ class DonarController extends Controller
 
     public function submitLogin(Request $request)
     {
-        //  return $request;
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) { //login attempt
+        if (Auth::attempt($credentials)) {
 
-            // dd('ok');
             $request->session()->regenerate();
 
             if ($request->has('rememberMe')) {
@@ -118,28 +116,23 @@ class DonarController extends Controller
     public function allDonars()
     {
         $allDonars = Donar::orderBy('id', 'desc')->with('blood_stock')->paginate('10');
-        // dd($allDonars);
         return view('backend.partials.donar.allDonars', compact('allDonars'));
     }
 
     public function status($id, $status)
     {
-        // dd($status);
         $data = Donar::where('id', $id)->first();
-        //  dd($data);
         $data->update(['status' => $status]);
         return redirect()->back();
     }
 
     public function donarForm()
-    { //Donar form
+    {
         return view('backend.partials.donar.createDonar');
     }
 
     public function createDonar(Request $request)
-    { //save donar information
-        // dd('kaj kortese');
-        // dd($request);
+    {
         $request->validate([
             'd_name' => 'required|string',
             'd_age' => 'required|numeric',
@@ -190,15 +183,19 @@ class DonarController extends Controller
         return redirect()->back()->with('message', 'Donar created successfully');
     }
 
-    public function editDonar($id)
+    public function editDonar()
     { //edit donar information
         // dd($id);
-        $data = Donar::findorFail($id);
+        $user = User::where('id', Auth::user()->id)->first();
+        $id = $user->id;
+        $data = Donar::where('user_id', $id)->first();
+        // return $data;
         return view('backend.partials.donar.editDonar', compact('data'));
     }
 
-    public function updateDonar(Request $request, $id)
+    public function updateDonar(Request $request)
     { //update donar information
+        //  return $request->all();
         $request->validate([
             'd_name' => 'required|string',
             'd_age' => 'required|numeric',
@@ -209,17 +206,19 @@ class DonarController extends Controller
             'd_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $currentID = Donar::find($id);
+        $user = User::where('id', Auth::user()->id)->first();
+        $id = $user->id;
+        $data = Donar::where('user_id', $id)->first();
 
         if ($request->file('d_image')) {
             $file = $request->file('d_image');
             $filename = date('Ymdhms') . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('backend/images/donar/'), $filename);
 
-            @unlink(public_path('backend/images/donar/') . $currentID->d_image); // delete previous image
+            @unlink(public_path('backend/images/donar/') . $data->d_image); // delete previous image
         }
 
-        $currentID->update([
+        $data->update([
             'd_name' => $request->d_name,
             'd_age' => $request->d_age,
             'd_mobile' => $request->d_mobile,
@@ -229,14 +228,23 @@ class DonarController extends Controller
             'd_image' => $filename,
 
         ]);
-        $id = $currentID->id;
+        $id = $data->id;
         $updateStock = BloodStock::where('donar_id', $id)->first();
         // dd($updateStock);
         $updateStock->update([
             'donar_id' => $id,
-            'blood_group' => $currentID->d_blood_group,
-            'avalability' => 'ready',
+            'blood_group' => $data->d_blood_group,
+            'avalability' => $request->avalability,
         ]);
+
+        $stockDataID = $updateStock->id;
+        $donatedUserData = DonatedUser::where('blood_stock_id', $stockDataID)->first();
+        $donatedUserData->update([
+            'blood_stock_id' => $stockDataID,
+            'donar_id' => $updateStock->donar_id,
+            'last_donation_date' => $request->last_donation_date,
+        ]);
+
         return redirect()->back()->with('message', 'Donar updated successfully');
     }
     public function deleteDonar($id)

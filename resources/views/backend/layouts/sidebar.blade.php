@@ -100,11 +100,6 @@
                 </a>
             </li><!-- End Dashboard Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-person"></i><span>My Profile</span>
-                </a>
-            </li>
             @php
                 $authID = Auth::user()->id;
                 $logedInDonorID = App\Models\Donar::where('user_id', $authID)
@@ -144,6 +139,13 @@
                         </a>
                     </li>
                 </ul>
+                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                  <li>
+                      <a href="{{ route('donate.ToPatient') }}">
+                          <i class="bi bi-circle"></i><span>To Patient</span>
+                      </a>
+                  </li>
+              </ul>
             </li>
         @endif
 

@@ -12,12 +12,10 @@ class PatientController extends Controller
     public function createPatient(){
         return view('backend.partials.patient.create');
     }
-    // all patienta list
-
+    
     public function allPatients(){
         
         $allPatients = Patient::orderBy('id','desc')->paginate('10');
-        // dd($allPatients);
         return view('backend.partials.patient.allPatient',compact('allPatients'));
     }
     // Save data
@@ -76,8 +74,7 @@ class PatientController extends Controller
     public function deletePatient($id){
 
         $data= Patient::findorFail($id);
-        //dd($data);
-         $data->delete();
-         return redirect()->back()->with('message', 'Patient deleted successfully!');
+        $data->delete();
+        return redirect()->back()->with('message', 'Patient deleted successfully!');
      }
 }

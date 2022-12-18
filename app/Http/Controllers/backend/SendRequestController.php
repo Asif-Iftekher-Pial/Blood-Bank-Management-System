@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Models\User;
-use App\Models\BloodRequest;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\BloodRequest;
 use App\Models\Donar;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -16,7 +15,6 @@ class SendRequestController extends Controller
 
     public function sendRequest($donar_id, $user_id)
     {
-        // return [$donar_id , $user_id];
         BloodRequest::create([
             'user_id' => $user_id,
             'donar_id' => $donar_id,
@@ -25,10 +23,8 @@ class SendRequestController extends Controller
 
         // send mail
         $donarInfo = Donar::where('id', $donar_id)->with('user')->first();
-        // return ($donarInfo);
-        
-        Mail::send('backend.mail.mailSend', ['donarInfo' => $donarInfo], function ($m) use ($donarInfo) 
-        {
+
+        Mail::send('backend.mail.mailSend', ['donarInfo' => $donarInfo], function ($m) use ($donarInfo) {
             $m->from(Auth::user()->email, 'BBMS-Blood Bank Management System');
             $m->to($donarInfo->user->email, $donarInfo->d_name)->subject('You have a blood request!');
         });
@@ -43,41 +39,34 @@ class SendRequestController extends Controller
         return back()->with('message', 'Request cancled!');
     }
 
-    public function requestedList(){
-    //    $test = Auth::user()->with('donar_info')->get();
-    //    dd($test);
+    public function requestedList()
+    {
         $myID = Donar::where('user_id', Auth::user()->id)->pluck('id')->first();
-        // return $myID;
-        // filter my ID from blood request table 
-        $brTableMyId= BloodRequest::where('donar_id',$myID)->with('patients')->get();
-        //  dd($brTableMyId);
-        return view('backend.partials.donar.requestList',compact('brTableMyId'));
+        $brTableMyId = BloodRequest::where('donar_id', $myID)->with('patients')->get();
+        return view('backend.partials.donar.requestList', compact('brTableMyId'));
     }
-    
-    public function confirmRequest($user_id){
-        // dd($user_id);
+
+    public function confirmRequest($user_id)
+    {
         $donar_ID = Donar::where('user_id', Auth::user()->id)->pluck('id')->first();
-        // dd($myID);
         $data = BloodRequest::where([
-            'donar_id'=>$donar_ID,
-            'user_id'=>$user_id
-            ])->first();
-        // dd($data);
+            'donar_id' => $donar_ID,
+            'user_id' => $user_id,
+        ])->first();
         $data->update([
-            'action'=>'confirmed'
+            'action' => 'confirmed',
         ]);
-        return back()->with('message','Request confirmed!');
+        return back()->with('message', 'Request confirmed!');
 
     }
 
-    public function deletePatientRequest($user_id){
+    public function deletePatientRequest($user_id)
+    {
         $myID = Donar::where('user_id', Auth::user()->id)->pluck('id')->first();
-        $data = BloodRequest::where('donar_id',$myID)->where('user_id',$user_id)->first();
-        //dd($data);
+        $data = BloodRequest::where('donar_id', $myID)->where('user_id', $user_id)->first();
         $data->delete();
-        return back()->with('error','Request removed!');
+        return back()->with('error', 'Request removed!');
 
     }
-
 
 }

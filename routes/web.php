@@ -24,38 +24,34 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-
 //  Frontend routes
 
-Route::get('/',[FrontendHomeController::class,'home'])->name('home');
+Route::get('/', [FrontendHomeController::class, 'home'])->name('home');
 
 // login && registration
-Route::get('/login',[AuthController::class,'login'])->name('login');
-Route::post('/submit-registration',[AuthController::class,'submitRegistration'])->name('submitRegistration');
-Route::post('/submit-login',[AuthController::class,'submitLogin'])->name('submitLogin');
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/submit-registration', [AuthController::class, 'submitRegistration'])->name('submitRegistration');
+Route::post('/submit-login', [AuthController::class, 'submitLogin'])->name('submitLogin');
 
-
-Route::group(['prefix' => 'patient','middleware' =>'auth'],function () {
-    Route::get('/logout',[AuthController::class,'logout'])->name('patient.logout');
-    Route::get('/profile-edit',[AuthController::class,'profileEdit'])->name('edit');
-    Route::put('/profile-update',[AuthController::class,'profileUpdate'])->name('profileUpdate');
-    // Donar 
-    Route::get('/donar-list',[FrontendDonarController::class,'donarList'])->name('donarList');
+Route::group(['prefix' => 'patient', 'middleware' => 'auth'], function () {
+    Route::get('/logout', [AuthController::class, 'logout'])->name('patient.logout');
+    Route::get('/profile-edit', [AuthController::class, 'profileEdit'])->name('edit');
+    Route::put('/profile-update', [AuthController::class, 'profileUpdate'])->name('profileUpdate');
+    // Donar
+    Route::get('/donar-list', [FrontendDonarController::class, 'donarList'])->name('donarList');
     // Send Request
     Route::get('/send-request/donar_id={donar_id}/patient_id={patient_id}/user_id={user_id}',
-    [FrontendDonarController::class,'sendRequestToDonar'])->name('patient.send.request');
+        [FrontendDonarController::class, 'sendRequestToDonar'])->name('patient.send.request');
     // Delete Request
     Route::get('/cancel-sent-request/donar_id={donar_id}/patient_id={patient_id}/user_id={user_id}',
-    [FrontendDonarController::class,'deleteRequest'])->name('patient.delete.request');
+        [FrontendDonarController::class, 'deleteRequest'])->name('patient.delete.request');
 
-    Route::get('/blood-bank',[FrontendBloodBankController::class,'bloodBankList'])->name('bloodBankList');
+    Route::get('/blood-bank', [FrontendBloodBankController::class, 'bloodBankList'])->name('bloodBankList');
     // Messege to admin
-    Route::get('/message-to-admin/{id}',[FrontendBloodBankController::class,'message'])->name('messageToAdmin');
-    Route::post('/send-message',[FrontendBloodBankController::class,'sendMessage'])->name('sendMessage');
+    Route::get('/message-to-admin/{id}', [FrontendBloodBankController::class, 'message'])->name('messageToAdmin');
+    Route::post('/send-message', [FrontendBloodBankController::class, 'sendMessage'])->name('sendMessage');
 
 });
-
-
 
 //  Backend Routes
 Route::group(['prefix' => 'app'], function () {
@@ -75,12 +71,19 @@ Route::group(['prefix' => 'app'], function () {
 
         Route::group(['middleware' => 'donar'], function () {
             // home pages
+
+            Route::get('/donar-edit', [DonarController::class, 'editDonar'])->name('edit.donar');
+            Route::put('/donar-update', [DonarController::class, 'updateDonar'])->name('update.donar');
+
             Route::get('/', [HomeController::class, 'dashboard'])->name('donar.dashboard');
             Route::get('/donate-blood-to-bank', [BloodBankController::class, 'donateNow'])->name('donate.bloodToBank');
+            Route::get('/donate-blood-to-patient', [BloodBankController::class, 'patientDonate'])->name('donate.ToPatient');
             Route::post('/save-donate-blood-to-bank', [BloodBankController::class, 'donateSaveifo'])->name('donate.bloodToBank.save');
+            Route::post('/save-donate-blood-to-patient', [BloodBankController::class, 'donateToPatientinfo'])->name('donate.bloodToPatient.save');
             Route::get('/requested-list', [SendRequestController::class, 'requestedList'])->name('requestedList');
             Route::get('/confirm-request/user={user_id}', [SendRequestController::class, 'confirmRequest'])->name('confirm.request');
             Route::get('/delete-request/user={user_id}', [SendRequestController::class, 'deletePatientRequest'])->name('donar.delete.request');
+
         });
 
     });
@@ -102,8 +105,6 @@ Route::group(['prefix' => 'app'], function () {
         Route::get('/donar-form', [DonarController::class, 'donarForm'])->name('donar.form');
         Route::get('/all-donars', [DonarController::class, 'allDonars'])->name('all.donar');
         Route::post('/create-donar', [DonarController::class, 'createDonar'])->name('create.donar');
-        Route::get('/donar-edit/{id}', [DonarController::class, 'editDonar'])->name('edit.donar');
-        Route::put('/donar-update/{id}', [DonarController::class, 'updateDonar'])->name('update.donar'); Route::put('/donar-update/{id}', [DonarController::class, 'updateDonar'])->name('update.donar');
         Route::get('/donar-delete/{id}', [DonarController::class, 'deleteDonar'])->name('delete.donar');
         Route::get('/donar-status/{id}/{status}', [DonarController::class, 'status'])->name('donar.status');
 
@@ -115,18 +116,17 @@ Route::group(['prefix' => 'app'], function () {
         // Send Request
         Route::get('/send-request/donar={donar_id}/user={user_id}', [SendRequestController::class, 'sendRequest'])->name('send.request');
         Route::get('/delete-request/donar={donar_id}/user={user_id}', [SendRequestController::class, 'deleteRequest'])->name('delete.request');
-        
-        
+
         // Bank
         Route::get('/blood-bank', [BloodBankController::class, 'bloodList'])->name('blood.list');
         Route::get('/delete-bank-blood/{id}', [BloodBankController::class, 'deleteBankBlood'])->name('deleteBankBlood');
 
         // message response
-        Route::get('/message-lists',[BloodBankController::class,'messageLists'])->name('messageLists');
-        Route::get('/see-message/bloodBankReq_id={id}/bloodBank_id={blood_bank_id}/patient_id={patient_id}',[BloodBankController::class, 'seeMessage'])->name('seeMessage');
-        Route::post('/reply-message/bloodBankReq_id={id}/bloodBank_id={blood_bank_id}/patient_id={patient_id}',[BloodBankController::class, 'replyMessage'])->name('replyMessage');
-        Route::get('/remove-message/bloodBankReq_id={id}/bloodBank_id={blood_bank_id}/patient_id={patient_id}',[BloodBankController::class, 'removeMessage'])->name('removeMessage');
-    
+        Route::get('/message-lists', [BloodBankController::class, 'messageLists'])->name('messageLists');
+        Route::get('/see-message/bloodBankReq_id={id}/bloodBank_id={blood_bank_id}/patient_id={patient_id}', [BloodBankController::class, 'seeMessage'])->name('seeMessage');
+        Route::post('/reply-message/bloodBankReq_id={id}/bloodBank_id={blood_bank_id}/patient_id={patient_id}', [BloodBankController::class, 'replyMessage'])->name('replyMessage');
+        Route::get('/remove-message/bloodBankReq_id={id}/bloodBank_id={blood_bank_id}/patient_id={patient_id}', [BloodBankController::class, 'removeMessage'])->name('removeMessage');
+
     });
 
 });

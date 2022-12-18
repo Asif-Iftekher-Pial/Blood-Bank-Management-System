@@ -22,7 +22,7 @@
             </div>
         @endif
         <!-- Multi Columns Form -->
-        <form action="{{ route('update.donar', $data->id) }}" method="POST" class="row g-3" enctype="multipart/form-data">
+        <form action="{{ route('update.donar') }}" method="POST" class="row g-3" enctype="multipart/form-data">
             @method('put')
             @csrf
             <div class="col-md-12">
@@ -58,6 +58,19 @@
                     <option value="AB+">AB+</option>
                     <option value="AB-">AB-</option>
                 </select>
+            </div>
+            <div class="col-12">
+                <label for="" class="form-label">Donation Status</label>
+                <select class="form-select" name="avalability"  aria-label="Default select example">
+                    <option selected>Select your status</option>
+                    <option value="ready">Ready</option>
+                    <option value="already_donated">Already Donated</option>
+                    
+                </select>
+            </div>
+            <div class="col-12">
+                <label for="" class="form-label">Last Donation Date</label>
+                <input type="date" name="last_donation_date" id="" class="form-control">
             </div>
             <div class="col-12">
                 <img style="width: 80px" src="{{ asset('backend/images/donar/'. $data->d_image) }}" alt="" srcset="">
